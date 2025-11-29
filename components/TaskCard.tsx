@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
-import "@/global.css";
+import { View, Text, TouchableOpacity, Pressable } from 'react-native';
+import { Check, Trash2, Calendar, RefreshCw } from 'lucide-react-native';
 import { Task } from '../lib/types/task.types';
 
 interface TaskCardProps {
@@ -28,61 +28,85 @@ export default function TaskCard({
     ? 'line-through text-gray-400'
     : 'text-gray-600';
 
+  const handleDeletePress = () => {
+    console.log('Botón de eliminar presionado para tarea:', task.id);
+    onDelete();
+  };
+
   return (
-    <View className={`border rounded-lg p-4 mb-3 shadow-sm ${cardStyles}`}>
+    <View className={`border-2 rounded-xl p-4 mb-3 shadow-sm ${cardStyles}`}>
       {/* Header with checkbox and delete button */}
-      <View className="flex-row items-center justify-between mb-2">
-        <TouchableOpacity
+      <View className="flex-row items-start justify-between mb-3">
+        {/* Checkbox and Title */}
+        <Pressable
           onPress={onToggleComplete}
-          className="flex-row items-center flex-1"
+          className="flex-row items-start flex-1 mr-2"
         >
           <View
-            className={`w-6 h-6 rounded border-2 mr-3 items-center justify-center ${
+            className={`w-7 h-7 rounded-md border-2 mr-3 items-center justify-center mt-0.5 ${
               task.completed
                 ? 'bg-green-500 border-green-500'
-                : 'border-gray-300'
+                : 'bg-white border-gray-400'
             }`}
           >
             {task.completed && (
-              <Text className="text-white text-xs font-bold">✓</Text>
+              <Check size={16} color="white" strokeWidth={3} />
             )}
           </View>
-          <Text className={`text-lg font-semibold flex-1 ${titleStyles}`}>
+          <Text className={`text-lg font-bold flex-1 ${titleStyles}`}>
             {task.title}
           </Text>
-        </TouchableOpacity>
+        </Pressable>
 
+        {/* Delete Button - Separated and bigger */}
         <TouchableOpacity
-          onPress={onDelete}
-          className="bg-red-500 rounded-full w-8 h-8 items-center justify-center ml-2"
+          onPress={handleDeletePress}
+          className="bg-red-500 rounded-lg ml-2"
+          style={{ 
+            minWidth: 50, 
+            minHeight: 50, 
+            justifyContent: 'center', 
+            alignItems: 'center',
+            paddingHorizontal: 12,
+            paddingVertical: 12,
+          }}
+          activeOpacity={0.7}
         >
-          <Text className="text-white font-bold">✕</Text>
+          <Trash2 size={20} color="white" strokeWidth={2.5} />
         </TouchableOpacity>
       </View>
 
-      {/* Description */}
-      <TouchableOpacity onPress={onPress}>
-        <Text className={`text-sm mb-2 ${descriptionStyles}`} numberOfLines={2}>
+      {/* Description - Clickeable para ver detalles */}
+      <Pressable onPress={onPress}>
+        <Text className={`text-sm mb-3 ${descriptionStyles}`} numberOfLines={2}>
           {task.description}
         </Text>
 
         {/* Date info */}
-        <View className="flex-row justify-between items-center mt-2">
-          <Text className="text-xs text-gray-400">
-            Creada: {new Date(task.createdAt).toLocaleDateString('es-ES')}
-          </Text>
-          {task.updatedAt && (
-            <Text className="text-xs text-gray-400">
-              Editada: {new Date(task.updatedAt).toLocaleDateString('es-ES')}
+        <View className="flex-row justify-between items-center mb-2">
+          <View className="flex-row items-center">
+            <Calendar size={14} color="#9CA3AF" />
+            <Text className="text-xs text-gray-400 ml-1">
+              {new Date(task.createdAt).toLocaleDateString('es-ES')}
             </Text>
+          </View>
+          {task.updatedAt && (
+            <View className="flex-row items-center">
+              <RefreshCw size={14} color="#9CA3AF" />
+              <Text className="text-xs text-gray-400 ml-1">
+                {new Date(task.updatedAt).toLocaleDateString('es-ES')}
+              </Text>
+            </View>
           )}
         </View>
 
         {/* View details link */}
-        <Text className="text-primary-600 text-sm font-semibold mt-2">
-          Ver detalles →
-        </Text>
-      </TouchableOpacity>
+        <View className="border-t border-gray-200 pt-2">
+          <Text className="text-primary-600 text-sm font-bold">
+            Ver detalles completos →
+          </Text>
+        </View>
+      </Pressable>
     </View>
   );
 }

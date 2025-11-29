@@ -1,11 +1,12 @@
 import React from 'react';
-import { View, Text, TextInput, TextInputProps } from 'react-native';
+import { Text, TextInput, TextInputProps, View } from 'react-native';
 
 interface InputProps extends TextInputProps {
   label: string;
   error?: string;
   helperText?: string;
   required?: boolean;
+  textAlignVertical?: 'top' | 'center' | 'bottom';
 }
 
 export default function Input({
@@ -13,6 +14,7 @@ export default function Input({
   error,
   helperText,
   required = false,
+  textAlignVertical,
   ...textInputProps
 }: InputProps) {
   const hasError = !!error;
@@ -37,6 +39,7 @@ export default function Input({
       <TextInput
         className={`border-2 rounded-lg px-4 py-3 text-base ${inputBorderColor} ${inputBgColor}`}
         placeholderTextColor="#9CA3AF"
+        style={textAlignVertical ? { textAlignVertical } : undefined}
         {...textInputProps}
       />
 

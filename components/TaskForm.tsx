@@ -131,7 +131,7 @@ export default function TaskForm({
           multiline
           numberOfLines={4}
           maxLength={200}
-          style={{ textAlignVertical: 'top' }}
+          textAlignVertical="top"
         />
 
         {/* Character Counters */}
@@ -145,7 +145,7 @@ export default function TaskForm({
         </View>
 
         {/* Action Buttons */}
-        <View className="gap-3">
+        <View className="mt-2">
           <Button
             title={submitLabel}
             onPress={handleSubmit}
@@ -154,15 +154,17 @@ export default function TaskForm({
             loading={isSubmitting}
             disabled={isSubmitting}
           />
-
+          
           {onCancel && (
-            <Button
-              title="Cancelar"
-              onPress={onCancel}
-              variant="secondary"
-              fullWidth
-              disabled={isSubmitting}
-            />
+            <View className="mt-3">
+              <Button
+                title="Cancelar"
+                onPress={onCancel}
+                variant="secondary"
+                fullWidth
+                disabled={isSubmitting}
+              />
+            </View>
           )}
         </View>
       </View>
