@@ -1,7 +1,7 @@
-import React from 'react';
-import { View, Text, TouchableOpacity, Pressable } from 'react-native';
-import { Check, Trash2, Calendar, RefreshCw } from 'lucide-react-native';
+import { Calendar, Check, RefreshCw, Trash2 } from 'lucide-react-native';
+import { Pressable, Text, TouchableOpacity, View } from 'react-native';
 import { Task } from '../lib/types/task.types';
+import React from 'react';
 
 interface TaskCardProps {
   task: Task;

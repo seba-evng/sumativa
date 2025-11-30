@@ -1,5 +1,5 @@
 import React from 'react';
-import { TouchableOpacity, Text, ActivityIndicator } from 'react-native';
+import { TouchableOpacity, Text, ActivityIndicator, View } from 'react-native';
 
 interface ButtonProps {
   title: string;
@@ -20,23 +20,16 @@ export default function Button({
   fullWidth = false,
   size = 'md',
 }: ButtonProps) {
-  // Determinar el color de fondo según el variant
-  const getBackgroundColor = () => {
-    if (disabled) return '#9CA3AF'; // gray-400
-    
-    switch (variant) {
-      case 'primary':
-        return '#0284c7'; // blue-600
-      case 'secondary':
-        return '#4B5563'; // gray-600
-      case 'danger':
-        return '#DC2626'; // red-600
-      case 'success':
-        return '#16A34A'; // green-600
-      default:
-        return '#0284c7';
-    }
+  const baseStyles = 'rounded-lg flex-row items-center justify-center';
+  
+  const variantStyles = {
+    primary: 'bg-primary-600 active:bg-primary-700',
+    secondary: 'bg-gray-600 active:bg-gray-700',
+    danger: 'bg-red-600 active:bg-red-700',
+    success: 'bg-green-600 active:bg-green-700',
   };
+
+  const disabledStyles = 'bg-gray-400 opacity-60';
 
   const sizeStyles = {
     sm: 'px-3 py-2',
@@ -52,10 +45,13 @@ export default function Button({
 
   const widthStyle = fullWidth ? 'w-full' : '';
 
+  const buttonClasses = `${baseStyles} ${
+    disabled ? disabledStyles : variantStyles[variant]
+  } ${sizeStyles[size]} ${widthStyle}`;
+
   return (
     <TouchableOpacity
-      className={`rounded-lg flex-row items-center justify-center ${sizeStyles[size]} ${widthStyle}`}
-      style={{ backgroundColor: getBackgroundColor() }}
+      className={buttonClasses}
       onPress={onPress}
       disabled={disabled || loading}
       activeOpacity={0.7}

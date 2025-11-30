@@ -1,8 +1,7 @@
 import { Task, TaskFormData } from '../types/task.types';
 
 // Configuración de la API
-// IMPORTANTE: Cambia USE_MOCK_API a false cuando JSON Server esté funcionando
-const USE_MOCK_API = false; //
+const USE_MOCK_API = false;
 const API_BASE_URL = 'https://3000-firebase-sumativa-1764016882432.cluster-dwvm25yncracsxpd26rcd5ja3m.cloudworkstations.dev';
 const API_URL = `${API_BASE_URL}/tasks`;
 
