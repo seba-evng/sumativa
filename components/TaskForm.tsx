@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "expo-router";
-import { ArrowLeft } from "lucide-react-native";
 import {
   View,
   Text,

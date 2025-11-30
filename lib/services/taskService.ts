@@ -47,7 +47,7 @@ export const getTasks = async (): Promise<Task[]> => {
     return tasks;
   } catch (error) {
     console.error('Error en getTasks:', error);
-    throw new Error('No se pudieron cargar las tareas. Verifica que JSON Server esté ejecutándose.');
+    throw new Error('No se pver esté ejecutándosudieron cargar las tareas. Verifica que JSON Sere.');
   }
 };
 

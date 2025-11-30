@@ -2,6 +2,7 @@ import { Stack } from 'expo-router';
 import "@/global.css";
 import { TaskProvider } from '../lib/context/TaskContext';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+import React from 'react';
 
 export default function RootLayout() {
   return (

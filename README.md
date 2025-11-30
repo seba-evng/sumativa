@@ -1,53 +1,311 @@
-> Edited for use in IDX on 07/09/12
+# 📱 Task Manager App
 
-# Welcome to your Expo app 👋
+Aplicación móvil de gestión de tareas desarrollada con React Native, Expo y TypeScript. Permite crear, editar, eliminar y organizar tareas con sincronización en tiempo real mediante JSON Server.
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+---
 
-## Get started
+## 🎯 Características Principales
 
-#### Android
+### ✨ Gestión Completa de Tareas
+- **Crear tareas**: Formulario con validación en tiempo real
+- **Editar tareas**: Modificar título y descripción
+- **Eliminar tareas**: Confirmación antes de eliminar
+- **Marcar como completada**: Toggle rápido del estado
+- **Ver detalles**: Pantalla completa con información detallada
 
-Android previews are defined as a `workspace.onStart` hook and started as a vscode task when the workspace is opened/started.
+### 🎨 Interfaz de Usuario
+- Diseño moderno con **NativeWind (Tailwind CSS)**
+- Iconos de **Lucide React Native**
+- Animaciones y transiciones suaves
+- Indicadores de estado (completada/pendiente)
+- Estadísticas en tiempo real (total, completadas, pendientes)
 
-Note, if you can't find the task, either:
-- Rebuild the environment (using command palette: `IDX: Rebuild Environment`), or
-- Run `npm run android -- --tunnel` command manually run android and see the output in your terminal. The device should pick up this new command and switch to start displaying the output from it.
+### 🔄 Funcionalidades Avanzadas
+- **Estado global** con Context API
+- **Persistencia de datos** con JSON Server
+- **Validación de formularios** con reglas personalizadas
+- **Navegación dinámica** con Expo Router
+- **Actualización pull-to-refresh**
+- **Gestión de errores** con feedback visual
 
-In the output of this command/task, you'll find options to open the app in a
+### 🤖 Integración con IA (Gemini)
+- Sugerencias inteligentes para mejorar tareas
+- Optimización de títulos y descripciones
+- Recomendaciones de pasos sugeridos
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+---
 
-You'll also find options to open the app's developer menu, reload the app, and more.
+## 🏗️ Arquitectura del Proyecto
 
-#### Web
-
-Web previews will be started and managred automatically. Use the toolbar to manually refresh.
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+task-manager-app/
+├── app/                          # Pantallas y navegación
+│   ├── _layout.tsx              # Layout principal y providers
+│   ├── index.tsx                # Pantalla principal (lista)
+│   └── tasks/
+│       ├── new.tsx              # Crear nueva tarea
+│       └── [id].tsx             # Detalles y edición
+│
+├── components/                   # Componentes reutilizables
+│   ├── Button.tsx               # Botón personalizado
+│   ├── Input.tsx                # Input con validación
+│   ├── TaskCard.tsx             # Tarjeta de tarea
+│   └── TaskForm.tsx             # Formulario de tarea
+│
+├── lib/                          # Lógica de negocio
+│   ├── context/
+│   │   └── TaskContext.tsx      # Estado global
+│   ├── services/
+│   │   ├── taskService.ts       # API de tareas
+│   │   └── gemini.ts            # Integración con Gemini AI
+│   ├── types/
+│   │   └── task.types.ts        # Tipos TypeScript
+│   └── utils/
+│       └── validation.ts        # Funciones de validación
+│
+├── db.json                       # Base de datos JSON Server
+├── tailwind.config.js           # Configuración de Tailwind
+├── metro.config.js              # Configuración de Metro
+└── package.json                 # Dependencias del proyecto
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+---
 
-## Learn more
+## 🚀 Configuración Inicial
 
-To learn more about developing your project with Expo, look at the following resources:
+### 1. Clonar el Repositorio
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```bash
+git clone <url-del-repositorio>
+cd task-manager-app
+```
 
-## Join the community
+### 2. Instalar Dependencias
 
-Join our community of developers creating universal apps.
+```bash
+npm install
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+### 3. Configurar Variables de Entorno
+
+Crea un archivo `.env` en la raíz del proyecto:
+
+```env
+EXPO_PUBLIC_GEMINI_API_KEY=tu_api_key_de_gemini
+```
+
+> **Nota**: Obtén tu API Key de [Google AI Studio](https://makersuite.google.com/app/apikey)
+
+### 4. Configurar JSON Server
+
+Actualiza la URL del servidor en `lib/services/taskService.ts`:
+
+```typescript
+const API_BASE_URL = 'http://TU_IP_LOCAL:3000';
+```
+
+Para obtener tu IP local:
+- **Windows**: `ipconfig` → Dirección IPv4
+- **Mac/Linux**: `ifconfig` → inet
+
+### 5. Iniciar JSON Server
+
+En una terminal separada:
+
+```bash
+npm run json-server
+```
+
+Deberías ver:
+```
+Resources
+http://192.168.x.x:3000/tasks
+```
+
+### 6. Iniciar la Aplicación
+
+```bash
+npx expo start
+```
+
+Luego escanea el código QR con:
+- **iOS**: Cámara del iPhone
+- **Android**: App Expo Go
+
+---
+
+## 📖 Uso de la Aplicación
+
+### Crear una Nueva Tarea
+
+1. Presiona el botón flotante **"+"** en la pantalla principal
+2. Completa el formulario:
+   - **Título**: 3-50 caracteres alfanuméricos
+   - **Descripción**: 5-200 caracteres alfanuméricos
+3. Presiona **"Crear Tarea"**
+
+### Ver Detalles de una Tarea
+
+1. Presiona sobre cualquier tarjeta de tarea
+2. Visualiza:
+   - Estado (Completada/Pendiente)
+   - Título y descripción completos
+   - Fecha de creación
+   - Última modificación
+   - ID de la tarea
+
+### Editar una Tarea
+
+1. Abre los detalles de la tarea
+2. Presiona **"Editar Tarea"**
+3. Modifica los campos deseados
+4. Presiona **"Guardar Cambios"**
+
+### Marcar como Completada
+
+**Opción 1**: Presiona el checkbox en la tarjeta de la tarea
+
+**Opción 2**: Dentro de los detalles, presiona **"Marcar como Completada"**
+
+### Eliminar una Tarea
+
+**Opción 1**: Presiona el ícono de basura en la tarjeta
+
+**Opción 2**: Dentro de los detalles, presiona **"Eliminar Tarea"**
+
+Ambas opciones mostrarán un diálogo de confirmación.
+
+---
+
+## 🔧 Tecnologías Utilizadas
+
+### Core
+- **React Native** - Framework de desarrollo móvil
+- **Expo** - Plataforma de desarrollo
+- **TypeScript** - Tipado estático
+
+### UI/UX
+- **NativeWind** - Tailwind CSS para React Native
+- **Lucide React Native** - Librería de iconos
+
+### Estado y Datos
+- **Context API** - Gestión de estado global
+- **JSON Server** - API REST simulada
+- **Expo Router** - Sistema de navegación basado en archivos
+
+### IA
+- **Google Generative AI** - Integración con Gemini 2.5 Pro
+
+---
+
+## 📋 Validaciones del Formulario
+
+### Título
+- ✅ No puede estar vacío
+- ✅ Solo letras, números y espacios
+- ✅ Mínimo 3 caracteres
+- ✅ Máximo 50 caracteres
+
+### Descripción
+- ✅ No puede estar vacía
+- ✅ Solo letras, números y espacios
+- ✅ Mínimo 5 caracteres
+- ✅ Máximo 200 caracteres
+
+---
+
+## 🔄 API Endpoints (JSON Server)
+
+### GET `/tasks`
+Obtiene todas las tareas
+
+**Respuesta:**
+```json
+[
+  {
+    "id": "1",
+    "title": "Tarea de ejemplo",
+    "description": "Esta es una tarea de ejemplo",
+    "completed": false,
+    "createdAt": "2025-01-15T10:00:00.000Z"
+  }
+]
+```
+
+### GET `/tasks/:id`
+Obtiene una tarea específica
+
+### POST `/tasks`
+Crea una nueva tarea
+
+**Body:**
+```json
+{
+  "title": "Nueva tarea",
+  "description": "Descripción de la tarea",
+  "completed": false,
+  "createdAt": "2025-01-15T10:00:00.000Z"
+}
+```
+
+### PUT `/tasks/:id`
+Actualiza una tarea existente
+
+### DELETE `/tasks/:id`
+Elimina una tarea
+
+---
+
+## 🔐 Configuración de Seguridad
+
+### Variables de Entorno
+Las API Keys y configuraciones sensibles deben estar en `.env`:
+
+```env
+EXPO_PUBLIC_GEMINI_API_KEY=your_key_here
+```
+
+### .gitignore
+Asegúrate de que `.env` esté en tu `.gitignore`:
+
+```
+.env
+.env.local
+```
+
+---
+
+## 📚 Recursos Adicionales
+
+- [Documentación de Expo](https://docs.expo.dev/)
+- [React Native](https://reactnative.dev/)
+- [NativeWind](https://www.nativewind.dev/)
+- [Expo Router](https://docs.expo.dev/router/introduction/)
+- [Lucide Icons](https://lucide.dev/)
+- [Google Gemini AI](https://ai.google.dev/)
+
+---
+
+## 👨‍💻 Desarrollo
+
+### Estructura de Carpetas
+
+- **app/**: Pantallas con enrutamiento automático
+- **components/**: Componentes UI reutilizables
+- **lib/context/**: Estado global con Context API
+- **lib/services/**: Lógica de conexión a APIs
+- **lib/types/**: Definiciones de tipos TypeScript
+- **lib/utils/**: Funciones utilitarias
+
+### Flujo de Datos
+
+```
+JSON Server (db.json)
+    ↓
+taskService.ts (Fetch API)
+    ↓
+TaskContext (Estado Global)
+    ↓
+Componentes (useTasks hook)
+    ↓
+UI (Renderizado)
